@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -7,8 +8,10 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "ANYBUY",
-          style: TextStyle(
+          style: GoogleFonts.architectsDaughter(
             color: Colors.black,
+            fontSize: 35,
+            fontStyle: FontStyle.italic
           ),
         ),
         centerTitle: true,
