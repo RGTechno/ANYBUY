@@ -10,7 +10,7 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8.0),
       child: TextField(
         decoration: InputDecoration(
           hintText: "Search",
