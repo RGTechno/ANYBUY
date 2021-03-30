@@ -1,3 +1,4 @@
+import 'package:anybuy/screens/Auth_Screen.dart';
 import 'package:anybuy/screens/Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: HomeScreen(),
+      routes: {
+        "/authHome": (_) => AuthHome(),
+      },
     );
   }
 }

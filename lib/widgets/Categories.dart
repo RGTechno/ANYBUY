@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Categories extends StatelessWidget {
-  final List<Map<String, String>> catMap = [
+  final List<Map<String, dynamic>> catMap = [
     {
       "image":
           "https://www.pngkit.com/png/detail/366-3665671_restaurant-meal-food-clipart-transparent-background.png",
@@ -21,7 +21,7 @@ class Categories extends StatelessWidget {
     },
     {
       "image":
-          "https://lh3.googleusercontent.com/proxy/_tjMe5xF7ii5Jsw1Cu8cwOaAJkqQ2SU-Mt9diDzF25ZnmqpOOok3iTo_kr7yxhPmAPNA_I9lbzP4Q0kj1nkkcLJa4kmi1tCp1Q",
+          "https://www.clipartmax.com/png/middle/2-23553_medicine-icon-medicine-clipart.png",
       "text": "Medicines"
     },
     {
@@ -30,8 +30,7 @@ class Categories extends StatelessWidget {
       "text": "Hypermarts"
     },
     {
-      "image":
-          "https://lh3.googleusercontent.com/proxy/XDXSMTZk3xQXrvg-VfEFawSBcJjthQts0W61KlI-x6k3pHO_jHjKQOjh04aXn1QpIyhBDpwX7URF05EgDiiWO_3JZoJiUCc_gA",
+      "image": "https://webstockreview.net/images/dairy-clipart-15.jpg",
       "text": "Dairy"
     },
     {
