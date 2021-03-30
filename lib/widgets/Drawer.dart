@@ -17,7 +17,7 @@ class DrawerMenu extends StatelessWidget {
             leading: Icon(Icons.person_add_alt_1_rounded),
             title: Text("I Am A Merchant"),
             onTap: () {
-              Navigator.of(context).pushNamed("/authHome");
+              Navigator.of(context).pushNamed("/authMerchant");
             },
           ),
         ],
