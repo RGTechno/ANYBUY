@@ -1,5 +1,5 @@
-import 'file:///E:/App_Projects/anybuy/lib/screens/auth/AuthHome_Screen.dart';
 import 'package:anybuy/screens/Home_Screen.dart';
+import 'package:anybuy/screens/auth/AuthHome_Screen.dart';
 import 'package:anybuy/screens/auth/AuthMerch_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
