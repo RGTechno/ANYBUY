@@ -1,6 +1,6 @@
-import 'file:///E:/App_Projects/anybuy/lib/screens/auth/AuthHome_Screen.dart';
-import 'package:anybuy/screens/Home_Screen.dart';
-import 'package:anybuy/screens/auth/AuthMerch_Screen.dart';
+import 'screens/Sarthak_Home.dart';
+import 'screens/auth/AuthHome_Screen.dart';
+import 'screens/auth/AuthMerch_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -21,10 +21,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "ArchD",
       ),
-      home: HomeScreen(),
+      initialRoute: HoomeScreen.id,
       routes: {
-        "/authHome": (_) => AuthHome(),
-        "/authMerchant": (_) => AuthMerchant(),
+        AuthHome.id: (context) => AuthHome(),
+        AuthMerchant.id: (context) => AuthMerchant(),
+        HoomeScreen.id: (context) => HoomeScreen(),
       },
     );
   }
