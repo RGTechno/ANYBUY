@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AuthHome extends StatefulWidget {
+  static String id = 'auth_home';
   @override
   _AuthHomeState createState() => _AuthHomeState();
 }

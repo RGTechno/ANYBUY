@@ -21,10 +21,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "ArchD",
       ),
-      home: HomeScreen(),
+      initialRoute: HoomeScreen.id,
       routes: {
-        "/authHome": (_) => AuthHome(),
-        "/authMerchant": (_) => AuthMerchant(),
+        AuthHome.id: (context) => AuthHome(),
+        AuthMerchant.id: (context) => AuthMerchant(),
+        HoomeScreen.id: (context) => HoomeScreen(),
       },
     );
   }
