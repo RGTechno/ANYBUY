@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'AnyBuy',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: "ArchD",
       ),
       home: HomeScreen(),
       routes: {
