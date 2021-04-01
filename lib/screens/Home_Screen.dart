@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
+  static String id = 'home_screen';
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

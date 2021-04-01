@@ -1,3 +1,5 @@
+import 'package:anybuy/screens/auth/AuthHome_Screen.dart';
+import 'package:anybuy/screens/auth/AuthMerch_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -33,7 +35,7 @@ class DrawerMenu extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed("/authHome");
+                    Navigator.of(context).pushNamed(AuthHome.id);
                   },
                   child: Text(
                     "Login/Signup",
@@ -65,7 +67,7 @@ class DrawerMenu extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
             onTap: () {
-              Navigator.of(context).pushNamed("/authMerchant");
+              Navigator.of(context).pushNamed(AuthMerchant.id);
             },
           ),
         ],
