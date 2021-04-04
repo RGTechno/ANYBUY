@@ -12,15 +12,15 @@ class AuthHome extends StatefulWidget {
 
 class _AuthHomeState extends State<AuthHome> {
   final _authHomeKey = GlobalKey<FormState>();
+  final String userEmail = "";
+  final String userPass = "";
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
   void createUser() async {
     try {
-      UserCredential userCredential = await auth
-          .createUserWithEmailAndPassword(
-              email: "barry.allen@example.com",
-              password: "SuperSecretPassword!");
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: "barry.allen@example.com", password: "SuperSecretPassword!");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -85,66 +85,41 @@ class _AuthHomeState extends State<AuthHome> {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.login_rounded,
-                            color: Colors.black54,
-                          ),
-                          label: Text(
-                            "Login",
-                            style: GoogleFonts.architectsDaughter(
+                    TextButton.icon(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.login_rounded,
+                        color: Colors.black54,
+                      ),
+                      label: Text(
+                        "Login",
+                        style: GoogleFonts.architectsDaughter(
+                          color: Colors.black54,
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          EdgeInsets.symmetric(horizontal: 20),
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            side: BorderSide(
                               color: Colors.black54,
                             ),
                           ),
-                          style: ButtonStyle(
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                              EdgeInsets.symmetric(horizontal: 20),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                side: BorderSide(
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ),
-                          ),
                         ),
-                        TextButton.icon(
-                          onPressed: createUser,
-                          icon: Icon(
-                            Icons.app_registration,
-                            color: Colors.black54,
-                          ),
-                          label: Text(
-                            "Sign Up",
-                            style: GoogleFonts.architectsDaughter(
-                              color: Colors.black54,
-                            ),
-                          ),
-                          style: ButtonStyle(
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                              EdgeInsets.symmetric(horizontal: 20),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                side: BorderSide(
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ),
-                          ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: createUser,
+                      child: Text(
+                        "New User! Sign Up Here",
+                        style: GoogleFonts.architectsDaughter(
+                          color: Colors.black54,
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),

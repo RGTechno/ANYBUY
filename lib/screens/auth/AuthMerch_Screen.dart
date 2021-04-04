@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AuthMerchant extends StatefulWidget {
   static String id = 'auth_merchant';
+
   @override
   _AuthMerchantState createState() => _AuthMerchantState();
 }
@@ -64,66 +65,41 @@ class _AuthMerchantState extends State<AuthMerchant> {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.login_rounded,
-                            color: Colors.black54,
-                          ),
-                          label: Text(
-                            "Login",
-                            style: GoogleFonts.architectsDaughter(
+                    TextButton.icon(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.login_rounded,
+                        color: Colors.black54,
+                      ),
+                      label: Text(
+                        "Login",
+                        style: GoogleFonts.architectsDaughter(
+                          color: Colors.black54,
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          EdgeInsets.symmetric(horizontal: 20),
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            side: BorderSide(
                               color: Colors.black54,
                             ),
                           ),
-                          style: ButtonStyle(
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                              EdgeInsets.symmetric(horizontal: 20),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                side: BorderSide(
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ),
-                          ),
                         ),
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.app_registration,
-                            color: Colors.black54,
-                          ),
-                          label: Text(
-                            "Sign Up",
-                            style: GoogleFonts.architectsDaughter(
-                              color: Colors.black54,
-                            ),
-                          ),
-                          style: ButtonStyle(
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                              EdgeInsets.symmetric(horizontal: 20),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                side: BorderSide(
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ),
-                          ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "New Merchant! Sign Up Here",
+                        style: GoogleFonts.architectsDaughter(
+                          color: Colors.black54,
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
