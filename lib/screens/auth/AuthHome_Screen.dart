@@ -12,15 +12,17 @@ class AuthHome extends StatefulWidget {
 
 class _AuthHomeState extends State<AuthHome> {
   final _authHomeKey = GlobalKey<FormState>();
-  final String userEmail = "";
-  final String userPass = "";
+  String userEmail = "";
+  String userPass = "";
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
   void createUser() async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-          email: "barry.allen@example.com", password: "SuperSecretPassword!");
+        email: "barry.allen@example.com",
+        password: "SuperSecretPassword!",
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -30,6 +32,32 @@ class _AuthHomeState extends State<AuthHome> {
     } catch (e) {
       print(e);
     }
+  }
+
+  void login() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: userEmail,
+        password: userPass,
+      );
+      print(userCredential.user.email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
+  void validate() {
+    if (!_authHomeKey.currentState.validate()) {
+      print("Invalid");
+      return;
+    }
+    _authHomeKey.currentState.save();
+    login();
   }
 
   @override
@@ -74,6 +102,17 @@ class _AuthHomeState extends State<AuthHome> {
                           "Enter Email-ID",
                           "Email",
                         ),
+                        validator: (String value) {
+                          if (value.isEmpty || !value.contains("@")) {
+                            return "Invalid";
+                          }
+                          return null;
+                        },
+                        onSaved: (newValue) {
+                          setState(() {
+                            userEmail = newValue;
+                          });
+                        },
                       ),
                     ),
                     Padding(
@@ -83,10 +122,24 @@ class _AuthHomeState extends State<AuthHome> {
                           "Enter Password",
                           "Password",
                         ),
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return "Required";
+                          }
+                          if (value.length < 5) {
+                            return "Password should be more than 5 characters";
+                          }
+                          return null;
+                        },
+                        onSaved: (newValue) {
+                          setState(() {
+                            userPass = newValue;
+                          });
+                        },
                       ),
                     ),
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: validate,
                       icon: Icon(
                         Icons.login_rounded,
                         color: Colors.black54,
