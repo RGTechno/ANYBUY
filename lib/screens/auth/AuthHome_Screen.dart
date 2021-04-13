@@ -14,19 +14,22 @@ class _AuthHomeState extends State<AuthHome> {
   final _authHomeKey = GlobalKey<FormState>();
   String userEmail = "";
   String userPass = "";
+  bool wantSignup = false;
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
   void createUser() async {
+    print("create user running");
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        email: "barry.allen@example.com",
-        password: "SuperSecretPassword!",
+        email: userEmail,
+        password: userPass,
+      );
+      print(
+        "User Created ${userCredential.user.email}, ${userCredential.user.uid}",
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
+      if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
     } catch (e) {
@@ -35,6 +38,8 @@ class _AuthHomeState extends State<AuthHome> {
   }
 
   void login() async {
+    print("login running");
+
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -57,7 +62,7 @@ class _AuthHomeState extends State<AuthHome> {
       return;
     }
     _authHomeKey.currentState.save();
-    login();
+    !wantSignup ? login() : createUser();
   }
 
   @override
@@ -122,6 +127,7 @@ class _AuthHomeState extends State<AuthHome> {
                           "Enter Password",
                           "Password",
                         ),
+                        obscureText: true,
                         validator: (String value) {
                           if (value.isEmpty) {
                             return "Required";
@@ -141,11 +147,13 @@ class _AuthHomeState extends State<AuthHome> {
                     TextButton.icon(
                       onPressed: validate,
                       icon: Icon(
-                        Icons.login_rounded,
+                        !wantSignup
+                            ? Icons.login_rounded
+                            : Icons.app_registration,
                         color: Colors.black54,
                       ),
                       label: Text(
-                        "Login",
+                        !wantSignup ? "Login" : "Create",
                         style: GoogleFonts.architectsDaughter(
                           color: Colors.black54,
                         ),
@@ -166,13 +174,24 @@ class _AuthHomeState extends State<AuthHome> {
                       ),
                     ),
                     TextButton(
-                      onPressed: createUser,
-                      child: Text(
-                        "New User! Sign Up Here",
-                        style: GoogleFonts.architectsDaughter(
-                          color: Colors.black54,
-                        ),
-                      ),
+                      onPressed: () {
+                        setState(() {
+                          wantSignup = !wantSignup;
+                        });
+                      },
+                      child: !wantSignup
+                          ? Text(
+                              "New User! Sign Up Here",
+                              style: GoogleFonts.architectsDaughter(
+                                color: Colors.black54,
+                              ),
+                            )
+                          : Text(
+                              "Already a member!,Login Here",
+                              style: GoogleFonts.architectsDaughter(
+                                color: Colors.black54,
+                              ),
+                            ),
                     ),
                   ],
                 ),
