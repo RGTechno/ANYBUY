@@ -1,7 +1,8 @@
-import 'package:anybuy/widgets/InputFieldDec.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:anybuy/widgets/InputFieldDec.dart';
 
 class AuthHome extends StatefulWidget {
   static String id = 'auth_home';
@@ -17,6 +18,7 @@ class _AuthHomeState extends State<AuthHome> {
   bool wantSignup = false;
 
   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   void createUser() async {
     print("create user running");
@@ -25,6 +27,14 @@ class _AuthHomeState extends State<AuthHome> {
         email: userEmail,
         password: userPass,
       );
+
+      await firestore
+          .collection("users")
+          .doc("${userCredential.user.uid}")
+          .set({
+        "id": "${userCredential.user.uid}",
+      });
+
       print(
         "User Created ${userCredential.user.email}, ${userCredential.user.uid}",
       );
