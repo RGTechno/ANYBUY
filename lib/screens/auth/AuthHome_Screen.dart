@@ -15,6 +15,8 @@ class _AuthHomeState extends State<AuthHome> {
   final _authHomeKey = GlobalKey<FormState>();
   String userEmail = "";
   String userPass = "";
+  String firstName = "";
+  String lastName = "";
   bool wantSignup = false;
 
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -33,6 +35,9 @@ class _AuthHomeState extends State<AuthHome> {
           .doc("${userCredential.user.uid}")
           .set({
         "id": "${userCredential.user.uid}",
+        "firstname": "$firstName",
+        "lastname": "$lastName",
+        "email": "$userEmail",
       });
 
       print(
@@ -110,6 +115,50 @@ class _AuthHomeState extends State<AuthHome> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    wantSignup
+                        ? Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: TextFormField(
+                              decoration: inpDec(
+                                "First Name",
+                                "First Name",
+                              ),
+                              validator: (String value) {
+                                if (value.isEmpty) {
+                                  return "Required";
+                                }
+                                return null;
+                              },
+                              onSaved: (newValue) {
+                                setState(() {
+                                  firstName = newValue;
+                                });
+                              },
+                            ),
+                          )
+                        : Container(),
+                    wantSignup
+                        ? Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: TextFormField(
+                              decoration: inpDec(
+                                "Last Name",
+                                "Last Name",
+                              ),
+                              validator: (String value) {
+                                if (value.isEmpty) {
+                                  return "Required";
+                                }
+                                return null;
+                              },
+                              onSaved: (newValue) {
+                                setState(() {
+                                  lastName = newValue;
+                                });
+                              },
+                            ),
+                          )
+                        : Container(),
                     Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: TextFormField(
