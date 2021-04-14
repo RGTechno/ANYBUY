@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             "ANYBUY",
-            style: GoogleFonts.architectsDaughter(
+            style: TextStyle(
               color: Colors.black87,
               fontSize: 40,
               fontStyle: FontStyle.italic,

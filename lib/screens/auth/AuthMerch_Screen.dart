@@ -73,7 +73,7 @@ class _AuthMerchantState extends State<AuthMerchant> {
                       ),
                       label: Text(
                         "Login",
-                        style: GoogleFonts.architectsDaughter(
+                        style: GoogleFonts.poppins(
                           color: Colors.black54,
                         ),
                       ),
@@ -96,7 +96,7 @@ class _AuthMerchantState extends State<AuthMerchant> {
                       onPressed: () {},
                       child: Text(
                         "New Merchant! Sign Up Here",
-                        style: GoogleFonts.architectsDaughter(
+                        style: GoogleFonts.poppins(
                           color: Colors.black54,
                         ),
                       ),

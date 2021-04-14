@@ -65,9 +65,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: ArchD
+    - family: Poppins
       fonts:
-        - asset: assets/fonts/ArchitectsDaughter-Regular.ttf
+        - asset: assets/fonts/Poppins-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

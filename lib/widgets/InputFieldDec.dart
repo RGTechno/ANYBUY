@@ -5,12 +5,12 @@ InputDecoration inpDec(String hintText, String labelText) {
   return InputDecoration(
     hintText: hintText,
     labelText: labelText,
-    labelStyle: GoogleFonts.architectsDaughter(),
+    labelStyle: GoogleFonts.poppins(),
     prefixIcon: Icon(
       Icons.search,
       color: Colors.black38,
     ),
-    hintStyle: GoogleFonts.architectsDaughter(fontSize: 13),
+    hintStyle: GoogleFonts.poppins(fontSize: 13),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
     ),

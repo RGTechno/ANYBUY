@@ -67,7 +67,7 @@ class Categories extends StatelessWidget {
                 ),
                 Text(
                   catMap[index]["text"],
-                  style: GoogleFonts.architectsDaughter(fontSize: 13),
+                  style: TextStyle(fontSize: 13),
                 ),
               ],
             ),

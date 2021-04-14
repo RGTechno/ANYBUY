@@ -43,6 +43,14 @@ class _AuthHomeState extends State<AuthHome> {
       print(
         "User Created ${userCredential.user.email}, ${userCredential.user.uid}",
       );
+
+      setState(() {
+        userEmail = "";
+        userPass = "";
+        firstName = "";
+        lastName = "";
+        wantSignup = !wantSignup;
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
@@ -213,7 +221,7 @@ class _AuthHomeState extends State<AuthHome> {
                       ),
                       label: Text(
                         !wantSignup ? "Login" : "Create",
-                        style: GoogleFonts.architectsDaughter(
+                        style: GoogleFonts.poppins(
                           color: Colors.black54,
                         ),
                       ),
@@ -241,13 +249,13 @@ class _AuthHomeState extends State<AuthHome> {
                       child: !wantSignup
                           ? Text(
                               "New User! Sign Up Here",
-                              style: GoogleFonts.architectsDaughter(
+                              style: GoogleFonts.poppins(
                                 color: Colors.black54,
                               ),
                             )
                           : Text(
                               "Already a member!,Login Here",
-                              style: GoogleFonts.architectsDaughter(
+                              style: GoogleFonts.poppins(
                                 color: Colors.black54,
                               ),
                             ),
