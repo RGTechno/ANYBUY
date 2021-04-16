@@ -1,10 +1,11 @@
+import 'package:anybuy/provider/AuthData.dart';
 import 'package:anybuy/screens/Home_Screen.dart';
-import 'package:anybuy/screens/Sarthak_Home.dart';
 import 'package:anybuy/screens/auth/AuthHome_Screen.dart';
 import 'package:anybuy/screens/auth/AuthMerch_Screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,19 +19,22 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'AnyBuy',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: "Poppins",
+    return ChangeNotifierProvider(
+      create: (context) => AuthData(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'AnyBuy',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          fontFamily: "Poppins",
+        ),
+        initialRoute: HomeScreen.id,
+        routes: {
+          AuthHome.id: (context) => AuthHome(),
+          AuthMerchant.id: (context) => AuthMerchant(),
+          HomeScreen.id: (context) => HomeScreen(),
+        },
       ),
-      initialRoute: HomeScreen.id,
-      routes: {
-        AuthHome.id: (context) => AuthHome(),
-        AuthMerchant.id: (context) => AuthMerchant(),
-        HomeScreen.id: (context) => HomeScreen(),
-      },
     );
   }
 }
