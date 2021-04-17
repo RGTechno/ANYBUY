@@ -25,15 +25,15 @@ class _AuthMerchantState extends State<AuthMerchant> {
   @override
   Widget build(BuildContext context) {
     final authData = Provider.of<AuthData>(context);
-    void validate() {
+    void validate() async {
       if (!_authMerchantKey.currentState.validate()) {
         print("Invalid");
         return;
       }
       _authMerchantKey.currentState.save();
       if (!wantSignup) {
-        authData.login(merchEmail, merchPass, "merchant");
-        Navigator.of(context).pushReplacementNamed(HomeScreen.id);
+        await authData.login(merchEmail, merchPass, "merchant");
+        await Navigator.of(context).pushReplacementNamed(HomeScreen.id);
       } else {
         authData.createMerchant(
           email: merchEmail,

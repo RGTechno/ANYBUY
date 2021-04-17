@@ -39,20 +39,30 @@ class DrawerMenu extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  user == null
-                      ? "Welcome User"
-                      : "Welcome ${currentUserData["firstname"]}",
-                  style: GoogleFonts.architectsDaughter(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 25,
+                ListTile(
+                  title: Text(
+                    user == null
+                        ? "Welcome User"
+                        : "Welcome ${currentUserData["firstname"]}",
+                    style: GoogleFonts.architectsDaughter(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 25,
+                    ),
+                  ),
+                  subtitle: Text(
+                    currentUserData["isMerchant"] == true && user != null
+                        ? "Merchant"
+                        : "",
+                    style: GoogleFonts.poppins(
+                      fontSize: 11.5,
+                    ),
                   ),
                 ),
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     user == null
                         ? Navigator.of(context).pushNamed(AuthHome.id)
-                        : authData.signOut(context);
+                        : await authData.signOut(context);
                   },
                   child: Text(
                     user == null ? "Login/Signup" : "Logout",
@@ -77,16 +87,18 @@ class DrawerMenu extends StatelessWidget {
               ],
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.person_add_alt_1_rounded),
-            title: Text(
-              "ANYBUY Buisness",
-              style: TextStyle(fontSize: 16),
-            ),
-            onTap: () {
-              Navigator.of(context).pushNamed(AuthMerchant.id);
-            },
-          ),
+          currentUserData["isMerchant"] != true
+              ? ListTile(
+                  leading: Icon(Icons.person_add_alt_1_rounded),
+                  title: Text(
+                    "ANYBUY Buisness",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(AuthMerchant.id);
+                  },
+                )
+              : Container(),
         ],
       ),
     );

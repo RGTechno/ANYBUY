@@ -97,7 +97,7 @@ class AuthData with ChangeNotifier {
     }
   }
 
-  void login(String email, String pass, String collection) async {
+  Future<void> login(String email, String pass, String collection) async {
     print("login running");
 
     try {
@@ -107,7 +107,7 @@ class AuthData with ChangeNotifier {
         password: pass,
       );
       print(userCredential.user.email);
-      getCurrentUserData(collection);
+      await getCurrentUserData(collection);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -117,12 +117,13 @@ class AuthData with ChangeNotifier {
     }
   }
 
-  void signOut(BuildContext ctx) async {
+  Future<void> signOut(BuildContext ctx) async {
     await auth.signOut();
     Navigator.of(ctx).pop();
+    notifyListeners();
   }
 
-  void getCurrentUserData(String collection) async {
+  Future<void> getCurrentUserData(String collection) async {
     var data;
     try {
       var currentData = await firestore
@@ -131,6 +132,7 @@ class AuthData with ChangeNotifier {
           .get();
       data = currentData.data();
       // print(data);
+      _currentUserData.clear();
       _currentUserData.addAll(data);
       print(currentUserData);
     } catch (e) {

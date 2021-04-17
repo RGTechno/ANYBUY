@@ -23,15 +23,15 @@ class _AuthHomeState extends State<AuthHome> {
   @override
   Widget build(BuildContext context) {
     final authData = Provider.of<AuthData>(context);
-    void validate() {
+    void validate() async {
       if (!_authHomeKey.currentState.validate()) {
         print("Invalid");
         return;
       }
       _authHomeKey.currentState.save();
       if (!wantSignup) {
-        authData.login(userEmail, userPass, "users");
-        Navigator.of(context).pushReplacementNamed(HomeScreen.id);
+        await authData.login(userEmail, userPass, "users");
+        await Navigator.of(context).pushReplacementNamed(HomeScreen.id);
       } else {
         authData.createUser(
           email: userEmail,
