@@ -1,11 +1,20 @@
+import 'package:anybuy/provider/AuthData.dart';
 import 'package:anybuy/screens/auth/AuthHome_Screen.dart';
 import 'package:anybuy/screens/auth/AuthMerch_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final authData = Provider.of<AuthData>(context);
+    final user = authData.auth.currentUser;
+    if (user != null) {
+      print(user.uid + user.email);
+    } else {
+      print("No user Signed in!!");
+    }
     return Drawer(
       elevation: 0,
       child: ListView(
@@ -35,10 +44,12 @@ class DrawerMenu extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(AuthHome.id);
+                    user == null
+                        ? Navigator.of(context).pushNamed(AuthHome.id)
+                        : authData.signOut(context);
                   },
                   child: Text(
-                    "Login/Signup",
+                    user == null ? "Login/Signup" : "Logout",
                     style: TextStyle(
                       color: Colors.black,
                     ),

@@ -1,8 +1,9 @@
 import 'package:anybuy/widgets/InputFieldDec.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:anybuy/provider/AuthData.dart';
+import 'package:provider/provider.dart';
 
 class AuthMerchant extends StatefulWidget {
   static String id = 'auth_merchant';
@@ -19,78 +20,25 @@ class _AuthMerchantState extends State<AuthMerchant> {
   String merchLastName = "";
   bool wantSignup = false;
 
-  FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  void createMerchant() async {
-    print("create user running");
-    try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        email: merchEmail,
-        password: merchPass,
-      );
-
-      await firestore
-          .collection("merchant")
-          .doc("${userCredential.user.uid}")
-          .set({
-        "id": "${userCredential.user.uid}",
-        "firstname": "$merchFirstName",
-        "lastname": "$merchLastName",
-        "email": "$merchEmail",
-        "isMerchant": true,
-      });
-
-      print(
-        "User Created ${userCredential.user.email}, ${userCredential.user.uid}",
-      );
-
-      setState(() {
-        merchEmail = "";
-        merchPass = "";
-        merchFirstName = "";
-        merchLastName = "";
-        wantSignup = !wantSignup;
-      });
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void login() async {
-    print("login running");
-
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: merchEmail,
-        password: merchPass,
-      );
-      print(userCredential.user.email);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
-  }
-
-  void validate() {
-    if (!_authMerchantKey.currentState.validate()) {
-      print("Invalid");
-      return;
-    }
-    _authMerchantKey.currentState.save();
-    !wantSignup ? login() : createMerchant();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final authData = Provider.of<AuthData>(context);
+    void validate() {
+      if (!_authMerchantKey.currentState.validate()) {
+        print("Invalid");
+        return;
+      }
+      _authMerchantKey.currentState.save();
+      !wantSignup
+          ? authData.login(merchEmail, merchPass)
+          : authData.createMerchant(
+              email: merchEmail,
+              pass: merchPass,
+              firstname: merchFirstName,
+              lastname: merchLastName,
+            );
+    }
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();

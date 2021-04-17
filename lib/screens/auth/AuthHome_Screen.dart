@@ -1,8 +1,9 @@
+import 'package:anybuy/provider/AuthData.dart';
+import 'package:anybuy/screens/Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:anybuy/widgets/InputFieldDec.dart';
+import 'package:provider/provider.dart';
 
 class AuthHome extends StatefulWidget {
   static String id = 'auth_home';
@@ -19,77 +20,28 @@ class _AuthHomeState extends State<AuthHome> {
   String lastName = "";
   bool wantSignup = false;
 
-  FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  void createUser() async {
-    print("create user running");
-    try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        email: userEmail,
-        password: userPass,
-      );
-
-      await firestore
-          .collection("users")
-          .doc("${userCredential.user.uid}")
-          .set({
-        "id": "${userCredential.user.uid}",
-        "firstname": "$firstName",
-        "lastname": "$lastName",
-        "email": "$userEmail",
-      });
-
-      print(
-        "User Created ${userCredential.user.email}, ${userCredential.user.uid}",
-      );
-
-      setState(() {
-        userEmail = "";
-        userPass = "";
-        firstName = "";
-        lastName = "";
-        wantSignup = !wantSignup;
-      });
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void login() async {
-    print("login running");
-
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: userEmail,
-        password: userPass,
-      );
-      print(userCredential.user.email);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
-  }
-
-  void validate() {
-    if (!_authHomeKey.currentState.validate()) {
-      print("Invalid");
-      return;
-    }
-    _authHomeKey.currentState.save();
-    !wantSignup ? login() : createUser();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final authData = Provider.of<AuthData>(context);
+    void validate() {
+      if (!_authHomeKey.currentState.validate()) {
+        print("Invalid");
+        return;
+      }
+      _authHomeKey.currentState.save();
+      if (!wantSignup) {
+        authData.login(userEmail, userPass);
+        Navigator.of(context).pushReplacementNamed(HomeScreen.id);
+      } else {
+        authData.createUser(
+          email: userEmail,
+          pass: userPass,
+          firstname: firstName,
+          lastname: lastName,
+        );
+      }
+    }
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
