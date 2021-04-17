@@ -30,7 +30,7 @@ class _AuthHomeState extends State<AuthHome> {
       }
       _authHomeKey.currentState.save();
       if (!wantSignup) {
-        authData.login(userEmail, userPass);
+        authData.login(userEmail, userPass, "users");
         Navigator.of(context).pushReplacementNamed(HomeScreen.id);
       } else {
         authData.createUser(

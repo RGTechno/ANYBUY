@@ -14,8 +14,8 @@ class DrawerMenu extends StatelessWidget {
     final currentUserData = authData.currentUserData;
     if (user != null) {
       // print(user.uid + user.email);
-      authData.getCurrentUserData("users", "${user.uid}");
-      // print(currentUserData["firstname"]);
+      // authData.getCurrentUserData("users", "${user.uid}");
+      print(currentUserData["firstname"]);
     } else {
       print("No user Signed in!!");
     }
@@ -45,7 +45,7 @@ class DrawerMenu extends StatelessWidget {
                       : "Welcome ${currentUserData["firstname"]}",
                   style: GoogleFonts.architectsDaughter(
                     fontWeight: FontWeight.w500,
-                    fontSize: 30,
+                    fontSize: 25,
                   ),
                 ),
                 TextButton(

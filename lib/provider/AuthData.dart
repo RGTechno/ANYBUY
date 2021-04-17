@@ -5,8 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthData with ChangeNotifier {
-  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  FirebaseAuth get auth {
+    return _auth;
+  }
 
   bool _isAuth = false;
 
@@ -93,7 +97,7 @@ class AuthData with ChangeNotifier {
     }
   }
 
-  void login(String email, String pass) async {
+  void login(String email, String pass, String collection) async {
     print("login running");
 
     try {
@@ -103,6 +107,7 @@ class AuthData with ChangeNotifier {
         password: pass,
       );
       print(userCredential.user.email);
+      getCurrentUserData(collection);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -117,14 +122,17 @@ class AuthData with ChangeNotifier {
     Navigator.of(ctx).pop();
   }
 
-  void getCurrentUserData(String collection, String id) async {
+  void getCurrentUserData(String collection) async {
     var data;
     try {
-      var currentData = await firestore.collection(collection).doc(id).get();
+      var currentData = await firestore
+          .collection(collection)
+          .doc(_auth.currentUser.uid)
+          .get();
       data = currentData.data();
       // print(data);
       _currentUserData.addAll(data);
-      // print(currentUserData);
+      print(currentUserData);
     } catch (e) {
       print(e);
     }

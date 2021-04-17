@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:anybuy/provider/AuthData.dart';
 import 'package:provider/provider.dart';
 
+import '../Home_Screen.dart';
+
 class AuthMerchant extends StatefulWidget {
   static String id = 'auth_merchant';
 
@@ -29,14 +31,17 @@ class _AuthMerchantState extends State<AuthMerchant> {
         return;
       }
       _authMerchantKey.currentState.save();
-      !wantSignup
-          ? authData.login(merchEmail, merchPass)
-          : authData.createMerchant(
-              email: merchEmail,
-              pass: merchPass,
-              firstname: merchFirstName,
-              lastname: merchLastName,
-            );
+      if (!wantSignup) {
+        authData.login(merchEmail, merchPass, "merchant");
+        Navigator.of(context).pushReplacementNamed(HomeScreen.id);
+      } else {
+        authData.createMerchant(
+          email: merchEmail,
+          pass: merchPass,
+          firstname: merchFirstName,
+          lastname: merchLastName,
+        );
+      }
     }
 
     return GestureDetector(
