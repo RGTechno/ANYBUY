@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,12 @@ class AuthData with ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   bool _isAuth = false;
+
+  Map _currentUserData = {};
+
+  Map get currentUserData {
+    return {..._currentUserData};
+  }
 
   bool get isAuth {
     return _isAuth;
@@ -107,5 +115,18 @@ class AuthData with ChangeNotifier {
   void signOut(BuildContext ctx) async {
     await auth.signOut();
     Navigator.of(ctx).pop();
+  }
+
+  void getCurrentUserData(String collection, String id) async {
+    var data;
+    try {
+      var currentData = await firestore.collection(collection).doc(id).get();
+      data = currentData.data();
+      // print(data);
+      _currentUserData.addAll(data);
+      // print(currentUserData);
+    } catch (e) {
+      print(e);
+    }
   }
 }

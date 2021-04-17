@@ -1,6 +1,7 @@
 import 'package:anybuy/provider/AuthData.dart';
 import 'package:anybuy/screens/auth/AuthHome_Screen.dart';
 import 'package:anybuy/screens/auth/AuthMerch_Screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +11,11 @@ class DrawerMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final authData = Provider.of<AuthData>(context);
     final user = authData.auth.currentUser;
+    final currentUserData = authData.currentUserData;
     if (user != null) {
-      print(user.uid + user.email);
+      // print(user.uid + user.email);
+      authData.getCurrentUserData("users", "${user.uid}");
+      // print(currentUserData["firstname"]);
     } else {
       print("No user Signed in!!");
     }
@@ -36,7 +40,9 @@ class DrawerMenu extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Welcome User",
+                  user == null
+                      ? "Welcome User"
+                      : "Welcome ${currentUserData["firstname"]}",
                   style: GoogleFonts.architectsDaughter(
                     fontWeight: FontWeight.w500,
                     fontSize: 30,
