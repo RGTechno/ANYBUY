@@ -65,6 +65,8 @@ class AuthData with ChangeNotifier {
     @required String pass,
     @required String firstname,
     @required String lastname,
+    @required String outletName,
+    @required String category,
   }) async {
     print("create user running");
     try {
@@ -82,6 +84,8 @@ class AuthData with ChangeNotifier {
         "lastname": lastname,
         "email": email,
         "isMerchant": true,
+        "outlet": outletName,
+        "category": category,
         "initials": "${firstname[0].toUpperCase()}${lastname[0].toUpperCase()}",
       });
 

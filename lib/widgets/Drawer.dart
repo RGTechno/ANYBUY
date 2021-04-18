@@ -87,7 +87,7 @@ class DrawerMenu extends StatelessWidget {
               ],
             ),
           ),
-          currentUserData["isMerchant"] != true
+          user == null
               ? ListTile(
                   leading: Icon(Icons.person_add_alt_1_rounded),
                   title: Text(

@@ -12,7 +12,11 @@ class _SearchBarState extends State<SearchBar> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8.0),
       child: TextField(
-        decoration: inpDec("Search Through Categories", "Search"),
+        decoration: inpDec(
+          "Search Through Categories",
+          "Search",
+          isSearch: true,
+        ),
       ),
     );
   }
