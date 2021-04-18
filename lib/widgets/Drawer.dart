@@ -1,10 +1,8 @@
-import 'package:anybuy/provider/AuthData.dart';
-import 'package:anybuy/screens/auth/AuthHome_Screen.dart';
-import 'package:anybuy/screens/auth/AuthMerch_Screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:anybuy/constants.dart';
+import 'package:anybuy/provider/AuthData.dart';
 
 class DrawerMenu extends StatelessWidget {
   @override
@@ -61,7 +59,7 @@ class DrawerMenu extends StatelessWidget {
                 TextButton(
                   onPressed: () async {
                     user == null
-                        ? Navigator.of(context).pushNamed(AuthHome.id)
+                        ? Navigator.of(context).pushNamed(authHome)
                         : await authData.signOut(context);
                   },
                   child: Text(
@@ -95,7 +93,7 @@ class DrawerMenu extends StatelessWidget {
                     style: TextStyle(fontSize: 16),
                   ),
                   onTap: () {
-                    Navigator.of(context).pushNamed(AuthMerchant.id);
+                    Navigator.of(context).pushNamed(merchAuth);
                   },
                 )
               : Container(),

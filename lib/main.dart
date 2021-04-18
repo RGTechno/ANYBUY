@@ -1,3 +1,4 @@
+import 'package:anybuy/constants.dart';
 import 'package:anybuy/provider/AuthData.dart';
 import 'package:anybuy/screens/Home_Screen.dart';
 import 'package:anybuy/screens/auth/AuthHome_Screen.dart';
@@ -33,11 +34,11 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           fontFamily: "Poppins",
         ),
-        initialRoute: HomeScreen.id,
+        initialRoute: homeScreen,
         routes: {
-          AuthHome.id: (context) => AuthHome(),
-          AuthMerchant.id: (context) => AuthMerchant(),
-          HomeScreen.id: (context) => HomeScreen(),
+          authHome: (context) => AuthHome(),
+          merchAuth: (context) => AuthMerchant(),
+          homeScreen: (context) => HomeScreen(),
         },
       ),
     );

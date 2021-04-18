@@ -1,13 +1,11 @@
-import 'package:anybuy/provider/AuthData.dart';
-import 'package:anybuy/screens/Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:anybuy/widgets/InputFieldDec.dart';
 import 'package:provider/provider.dart';
+import 'package:anybuy/constants.dart';
+import 'package:anybuy/provider/AuthData.dart';
+import 'package:anybuy/widgets/InputFieldDec.dart';
 
 class AuthHome extends StatefulWidget {
-  static String id = 'auth_home';
-
   @override
   _AuthHomeState createState() => _AuthHomeState();
 }
@@ -31,7 +29,8 @@ class _AuthHomeState extends State<AuthHome> {
       _authHomeKey.currentState.save();
       if (!wantSignup) {
         await authData.login(userEmail, userPass, "users");
-        await Navigator.of(context).pushReplacementNamed(HomeScreen.id);
+        if (authData.currentUserData.isNotEmpty)
+          await Navigator.of(context).pushReplacementNamed(homeScreen);
       } else {
         authData.createUser(
           email: userEmail,
@@ -61,12 +60,27 @@ class _AuthHomeState extends State<AuthHome> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                "HI! User",
-                style: GoogleFonts.architectsDaughter(
-                  color: Colors.black,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
+              ListTile(
+                subtitle: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed(merchAuth);
+                  },
+                  child: Text(
+                    "Are You A Merchant?, Click Here",
+                    style: GoogleFonts.architectsDaughter(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                title: Text(
+                  "HI! User",
+                  style: GoogleFonts.architectsDaughter(
+                    color: Colors.black,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Form(

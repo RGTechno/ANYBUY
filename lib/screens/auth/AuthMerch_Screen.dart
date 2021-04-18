@@ -1,15 +1,12 @@
+import 'package:anybuy/constants.dart';
 import 'package:anybuy/widgets/InputFieldDec.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:anybuy/provider/AuthData.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/Categories.dart';
-import '../Home_Screen.dart';
 
 class AuthMerchant extends StatefulWidget {
-  static String id = 'auth_merchant';
-
   @override
   _AuthMerchantState createState() => _AuthMerchantState();
 }
@@ -35,7 +32,8 @@ class _AuthMerchantState extends State<AuthMerchant> {
       _authMerchantKey.currentState.save();
       if (!wantSignup) {
         await authData.login(merchEmail, merchPass, "merchant");
-        await Navigator.of(context).pushReplacementNamed(HomeScreen.id);
+        if (authData.currentUserData.isNotEmpty)
+          await Navigator.of(context).pushReplacementNamed(homeScreen);
       } else {
         authData.createMerchant(
           email: merchEmail,

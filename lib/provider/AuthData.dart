@@ -38,6 +38,17 @@ class AuthData with ChangeNotifier {
       );
 
       await firestore
+          .collection("allUsers")
+          .doc("${userCredential.user.uid}")
+          .set({
+        "id": "${userCredential.user.uid}",
+        "firstname": firstname,
+        "lastname": lastname,
+        "email": email,
+        "initials": "${firstname[0].toUpperCase()}${lastname[0].toUpperCase()}",
+      });
+
+      await firestore
           .collection("users")
           .doc("${userCredential.user.uid}")
           .set({
@@ -76,6 +87,20 @@ class AuthData with ChangeNotifier {
       );
 
       await firestore
+          .collection("allUsers")
+          .doc("${userCredential.user.uid}")
+          .set({
+        "id": "${userCredential.user.uid}",
+        "firstname": firstname,
+        "lastname": lastname,
+        "email": email,
+        "isMerchant": true,
+        "outlet": outletName,
+        "category": category,
+        "initials": "${firstname[0].toUpperCase()}${lastname[0].toUpperCase()}",
+      });
+
+      await firestore
           .collection("merchant")
           .doc("${userCredential.user.uid}")
           .set({
@@ -103,6 +128,7 @@ class AuthData with ChangeNotifier {
 
   Future<void> login(String email, String pass, String collection) async {
     print("login running");
+    _currentUserData.clear();
 
     try {
       UserCredential userCredential =
@@ -123,6 +149,8 @@ class AuthData with ChangeNotifier {
 
   Future<void> signOut(BuildContext ctx) async {
     await auth.signOut();
+    _currentUserData.clear();
+
     Navigator.of(ctx).pop();
     notifyListeners();
   }
@@ -136,7 +164,6 @@ class AuthData with ChangeNotifier {
           .get();
       data = currentData.data();
       // print(data);
-      _currentUserData.clear();
       _currentUserData.addAll(data);
       print(currentUserData);
     } catch (e) {
