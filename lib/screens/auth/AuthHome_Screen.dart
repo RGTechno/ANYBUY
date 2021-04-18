@@ -28,7 +28,7 @@ class _AuthHomeState extends State<AuthHome> {
       }
       _authHomeKey.currentState.save();
       if (!wantSignup) {
-        await authData.login(userEmail, userPass, "users");
+        await authData.login(userEmail, userPass);
         if (authData.currentUserData.isNotEmpty)
           await Navigator.of(context).pushReplacementNamed(homeScreen);
       } else {

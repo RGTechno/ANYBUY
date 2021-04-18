@@ -31,7 +31,7 @@ class _AuthMerchantState extends State<AuthMerchant> {
       }
       _authMerchantKey.currentState.save();
       if (!wantSignup) {
-        await authData.login(merchEmail, merchPass, "merchant");
+        await authData.login(merchEmail, merchPass);
         if (authData.currentUserData.isNotEmpty)
           await Navigator.of(context).pushReplacementNamed(homeScreen);
       } else {
