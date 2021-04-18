@@ -1,5 +1,5 @@
 import 'package:anybuy/constants.dart';
-import 'package:anybuy/provider/AuthData.dart';
+import 'package:anybuy/provider/AuthData_Provider.dart';
 import 'package:anybuy/screens/Home_Screen.dart';
 import 'package:anybuy/screens/auth/AuthHome_Screen.dart';
 import 'package:anybuy/screens/auth/AuthMerch_Screen.dart';

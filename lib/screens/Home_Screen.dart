@@ -1,4 +1,4 @@
-import 'package:anybuy/provider/AuthData.dart';
+import 'package:anybuy/provider/AuthData_Provider.dart';
 import 'package:anybuy/screens/merchScreen.dart';
 import 'package:provider/provider.dart';
 

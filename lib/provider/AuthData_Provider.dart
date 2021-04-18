@@ -1,8 +1,6 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthData with ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -22,6 +20,24 @@ class AuthData with ChangeNotifier {
 
   bool get isAuth {
     return _isAuth;
+  }
+
+  Future<void> createOutlet(
+    String id,
+    String name,
+    String outletName,
+    String cat,
+  ) async {
+    try {
+      await firestore.collection("/outlets").add({
+        "merchantId": id,
+        "merchantName": name,
+        "outletName": outletName,
+        "category": cat,
+      });
+    } catch (err) {
+      print(err);
+    }
   }
 
   void createUser({
@@ -113,6 +129,13 @@ class AuthData with ChangeNotifier {
         "category": category,
         "initials": "${firstname[0].toUpperCase()}${lastname[0].toUpperCase()}",
       });
+
+      await createOutlet(
+        userCredential.user.uid,
+        "$firstname $lastname",
+        outletName,
+        category,
+      );
 
       print(
         "User Created ${userCredential.user.email}, ${userCredential.user.uid}",
